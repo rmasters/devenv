@@ -14,4 +14,7 @@
     - git
 
 - name: update user account
-  user: name=ross shell=/bin/zsh
+  user: name=ross shell=/bin/zsh generate_ssh_key=yes ssh_key_file=/home/ross/.ssh/id_rsa
+
+- name: configure git
+  file: src=gitconfig dest=/home/ross/.gitconfig owner=ross group=ross
