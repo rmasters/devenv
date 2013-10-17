@@ -1,0 +1,17 @@
+---
+
+- name: get up-to-date
+  apt: update_cache=yes upgrade=dist
+
+- name: install the absolute essentials
+  apt: pkg={{ item }}
+  with_items:
+    - vim
+    - zsh
+    - tmux
+    - htop
+    - iftop
+    - git
+
+- name: update user account
+  user: name=ross shell=/bin/zsh
