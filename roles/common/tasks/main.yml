@@ -12,9 +12,16 @@
     - htop
     - iftop
     - git
+    - curl
 
 - name: update user account
   user: name=ross shell=/bin/zsh generate_ssh_key=yes ssh_key_file=/home/ross/.ssh/id_rsa
 
 - name: configure git
   file: src=gitconfig dest=/home/ross/.gitconfig owner=ross group=ross
+
+- name: get oh-my-zsh
+  git: repo=git://github.com/robbyrussell/oh-my-zsh.git dest=/home/ross/.oh-my-zsh
+
+- name: create new zsh config
+  command: cp /home/ross/.oh-my-zsh/templates/zshrc.zsh-template /home/ross/.zshrc
