@@ -24,4 +24,4 @@
   git: repo=git://github.com/robbyrussell/oh-my-zsh.git dest=/home/ross/.oh-my-zsh
 
 - name: create new zsh config
-  command: cp /home/ross/.oh-my-zsh/templates/zshrc.zsh-template /home/ross/.zshrc
+  file: src=zshrc dest=/home/ross/.zshrc owner=ross group=ross
