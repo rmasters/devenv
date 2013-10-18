@@ -1,3 +1,5 @@
 [user]
 	email = ross@rossmasters.com
 	name = Ross Masters
+[core]
+	editor = vim
