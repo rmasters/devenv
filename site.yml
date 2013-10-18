@@ -1,6 +1,10 @@
 ---
 
 - hosts: all
+  vars:
+    intellij_idea:
+      url: http://download-ln.jetbrains.com/idea/ideaIU-12.1.6.tar.gz
   roles:
     - common
     - chrome
+    - intellij

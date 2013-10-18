@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=IntelliJ IDEA
+Icon=/opt/intellij/bin/idea.png
+Exec="/opt/intellij/bin/idea.sh" %f
+Comment=Develop with pleasure!
+Categories=Development;IDE
+Terminal=false
+StartupNotify=true
+StartupWMClass=jetbrains-idea

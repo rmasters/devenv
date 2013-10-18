@@ -1,0 +1,39 @@
+---
+
+# IntelliJ doesn't support non-Sun/Oracle JDKs (although OpenJDK does seem to work)
+- name: add oracle jdk repository
+  apt_repository: repo=ppa:webupd8team/java update_cache=yes
+
+# Hat-tip: http://askubuntu.com/a/272336
+- name: accept oracle license
+  command: echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
+
+- name: use apt noninteractive mode
+  shell: export DEBIAN_FRONTEND=noninteractive
+
+- name: install jdk
+  apt: name=oracle-java8-installer state=present
+
+- name: use oracle jdk
+  command: update-java-alternatives -s java-8-oracle
+ 
+- name: is intellij installed?
+  shell: test -f /opt/intellij/bin/idea.sh && echo 1 || echo 0
+  register: intellij_installed
+   
+- name: download intellij idea
+  get_url: url={{ intellij_idea.url }} dest=/tmp/intellij-idea.tar.gz
+  when: intellij_installed == 0
+
+- name: create intellij install dir
+  file: dest=/opt/intellij state=directory
+
+- name: extract intellij
+  command: tar --extract --gzip --file /tmp/intellij-idea.tar.gz --directory /opt/intellij --strip 1
+  when: intellij_installed == 0
+
+- name: cleanup archive
+  file: dest=/tmp/intellij-idea.tar.gz state=absent
+
+- name: create menu item
+  copy: src=intellij.desktop dest=/usr/share/applications/intellij.desktop mode=0644
