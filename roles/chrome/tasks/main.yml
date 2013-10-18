@@ -1,16 +1,23 @@
 ---
 
+- name: is chrome installed?
+  command: dpkg --get-selections | grep google-chrome | wc -m
+  register: chrome_installed
+
 - name: download google chrome beta
   get_url: url=https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb dest=/tmp/chrome.deb
+  when: chrome_installed == 0
 
 - name: install google chrome beta
   command: dpkg -i /tmp/chrome.deb
   ignore_errors: true
+  when: chrome_installed == 0
 
 # Basically, dpkg attempts to install, then fails on dependencies.
 # Apt-get can fix that. There must be a better way right? Install using apt?
 - name: fix broken apt state
   command: apt-get -fy install
+  when: chrome_installed == 0
 
 - name: cleanup google chrome beta
   file: path=/tmp/chrome.deb state=absent
